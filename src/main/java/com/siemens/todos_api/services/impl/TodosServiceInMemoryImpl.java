@@ -22,6 +22,9 @@ public class TodosServiceInMemoryImpl implements TodosService {
 
     @Override
     public Todo saveTodo(Todo todo) {
+        if(todo.getDescription()==null){
+            return null;
+        }
        todo.setId(++todosCount);
        todos.add(todo);
        return todo;

@@ -6,6 +6,9 @@ import com.siemens.todos_api.services.TodosService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,9 +36,12 @@ public class TodosController {
     }
 
     @PostMapping("/todos")
-    public Todo saveTodo(@RequestBody Todo todo){
+    public ResponseEntity<Todo> saveTodo(@RequestBody Todo todo){
         Todo newTodo= todosService.saveTodo(todo);
-        return todo;
+        if(newTodo==null){
+            return  ResponseEntity.noContent().build();
+        }
+        return new ResponseEntity<Todo>(newTodo, HttpStatus.CREATED);
     }
 
 }
