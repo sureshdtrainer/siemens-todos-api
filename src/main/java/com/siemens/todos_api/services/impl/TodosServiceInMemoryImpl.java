@@ -60,6 +60,15 @@ public class TodosServiceInMemoryImpl implements TodosService {
 
     @Override
     public boolean deleteTodo(int id) {
+        //check if the id is present in the existing todos arraylist
+        for (Todo todo : todos){
+            if(todo.getId()==id) {
+                todos.remove(todo);
+                return true;
+            }
+        }
         return false;
+        //if id is found remove the object from arraylist
+        //not found
     }
 }

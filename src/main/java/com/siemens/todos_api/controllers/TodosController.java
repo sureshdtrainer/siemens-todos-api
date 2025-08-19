@@ -52,4 +52,13 @@ public class TodosController {
         return new ResponseEntity<Todo>(updatedTodo, HttpStatus.OK);
     }
 
+    @DeleteMapping("{id}")
+    public boolean deleteTodo(@PathVariable int id){
+        boolean result = todosService.deleteTodo(id);
+        if(!result){
+            throw new ResourceNotFoundException("Todos with id "+ id+ " Not Found");
+        }
+        return result;
+    }
+
 }
