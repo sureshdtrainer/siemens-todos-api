@@ -1,5 +1,6 @@
 package com.siemens.todos_api.services.impl;
 
+import com.siemens.todos_api.exceptions.ResourceNotFoundException;
 import com.siemens.todos_api.models.Todo;
 import com.siemens.todos_api.services.TodosService;
 import org.springframework.stereotype.Service;
@@ -30,12 +31,12 @@ public class TodosServiceInMemoryImpl implements TodosService {
     }
 
     @Override
-    public Todo getTodoById(int id) {
+    public Todo getTodoById(int id) throws ResourceNotFoundException {
         for(Todo todo : todos){
             if(todo.getId() == id){
                 return todo;
             }
         }
-        return null;
+        throw new ResourceNotFoundException("Todos with id "+ id+ " Not Found");
     }
 }

@@ -1,7 +1,10 @@
 package com.siemens.todos_api.controllers;
 
+import com.siemens.todos_api.exceptions.ResourceNotFoundException;
 import com.siemens.todos_api.models.Todo;
 import com.siemens.todos_api.services.TodosService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +14,8 @@ import java.util.List;
 
 @RestController
 public class TodosController {
+
+    private static final Logger logger = LoggerFactory.getLogger(TodosController.class);
     @Autowired
     private TodosService todosService;
 
@@ -21,7 +26,12 @@ public class TodosController {
 
     @GetMapping("todos/{id}")
     public Todo getTodoById(@PathVariable int id){
-        return todosService.getTodoById(id);
+        try {
+            return todosService.getTodoById(id);
+        }catch(ResourceNotFoundException resourceNotFoundException){
+            logger.warn(resourceNotFoundException.getMessage());
+            throw resourceNotFoundException;
+        }
     }
 
 }
