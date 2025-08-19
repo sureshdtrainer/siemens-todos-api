@@ -22,7 +22,9 @@ public class TodosServiceInMemoryImpl implements TodosService {
 
     @Override
     public Todo saveTodo(Todo todo) {
-        return null;
+       todo.setId(++todosCount);
+       todos.add(todo);
+       return todo;
     }
 
     @Override
