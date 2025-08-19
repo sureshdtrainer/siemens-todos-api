@@ -14,18 +14,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/v1/todos")
 public class TodosController {
 
     private static final Logger logger = LoggerFactory.getLogger(TodosController.class);
     @Autowired
     private TodosService todosService;
 
-    @GetMapping("todos")
+    @GetMapping
     public List<Todo> getAllTodos(){
+        logger.info("Inside getAllTodos method");
         return todosService.getAllTodos();
     }
 
-    @GetMapping("todos/{id}")
+    @GetMapping("{id}")
     public Todo getTodoById(@PathVariable int id){
         try {
             return todosService.getTodoById(id);
@@ -35,13 +37,19 @@ public class TodosController {
         }
     }
 
-    @PostMapping("/todos")
+    @PostMapping
     public ResponseEntity<Todo> saveTodo(@RequestBody Todo todo){
         Todo newTodo= todosService.saveTodo(todo);
         if(newTodo==null){
             return  ResponseEntity.noContent().build();
         }
         return new ResponseEntity<Todo>(newTodo, HttpStatus.CREATED);
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<Todo> updateTodo(@PathVariable int id,@RequestBody Todo todo){
+        Todo updatedTodo = todosService.updateTodo(id, todo);
+        return new ResponseEntity<Todo>(updatedTodo, HttpStatus.OK);
     }
 
 }

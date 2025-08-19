@@ -32,6 +32,7 @@ public class TodosServiceInMemoryImpl implements TodosService {
 
     @Override
     public List<Todo> getAllTodos() {
+        System.out.println("Inside service ");
         return todos;
     }
 
@@ -43,5 +44,22 @@ public class TodosServiceInMemoryImpl implements TodosService {
             }
         }
         throw new ResourceNotFoundException("Todos with id "+ id+ " Not Found");
+    }
+
+    @Override
+    public Todo updateTodo(int id, Todo todo) {
+       //check if the provided id is present in the todos arraylist
+        Todo existingTodo = this.getTodoById(id);
+        //if i am abel to find then update the existing todo object
+        //existingTodo.setDescription(todo.getDescription());
+        existingTodo.setTargetDate(todo.getTargetDate());
+        existingTodo.setDone(todo.isDone());
+        // not found
+        return existingTodo;
+    }
+
+    @Override
+    public boolean deleteTodo(int id) {
+        return false;
     }
 }

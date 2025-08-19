@@ -11,4 +11,8 @@ public interface TodosService {
     List<Todo> getAllTodos();
 
     Todo getTodoById(int id);
+
+    Todo updateTodo(int id, Todo todo);
+
+    boolean deleteTodo(int id);
 }
