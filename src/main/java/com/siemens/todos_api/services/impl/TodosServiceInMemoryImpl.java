@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Service
+
 public class TodosServiceInMemoryImpl implements TodosService {
     private static List<Todo> todos = new ArrayList<>();
     private static int todosCount=3;
