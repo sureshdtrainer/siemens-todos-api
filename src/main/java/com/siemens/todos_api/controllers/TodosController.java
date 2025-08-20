@@ -3,6 +3,7 @@ package com.siemens.todos_api.controllers;
 import com.siemens.todos_api.exceptions.ResourceNotFoundException;
 import com.siemens.todos_api.models.Todo;
 import com.siemens.todos_api.services.TodosService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class TodosController {
     }
 
     @PostMapping
-    public ResponseEntity<Todo> saveTodo(@RequestBody Todo todo){
+    public ResponseEntity<Todo> saveTodo(@Valid @RequestBody Todo todo){
         Todo newTodo= todosService.saveTodo(todo);
         if(newTodo==null){
             return  ResponseEntity.noContent().build();

@@ -1,6 +1,8 @@
 package com.siemens.todos_api.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +23,10 @@ public class Todo {
     private int id;
 
     @Column(name="description", nullable = false)
+    @NotNull
+    @Size(min=3, message="Enter atleast 3 characters")
     private String description;
+    @NotNull
     private Date targetDate;
     private boolean isDone;
 }
