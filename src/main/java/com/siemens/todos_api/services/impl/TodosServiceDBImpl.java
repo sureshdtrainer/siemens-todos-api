@@ -36,11 +36,21 @@ public class TodosServiceDBImpl implements TodosService {
 
     @Override
     public Todo updateTodo(int id, Todo todo) {
-        return null;
+        Todo existingTodo = todosRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Todos with id "+ id+ " Not Found"));
+
+        existingTodo.setTargetDate(todo.getTargetDate());
+        existingTodo.setDone(todo.isDone());
+        //save to db
+        todosRepository.save(existingTodo);
+        return existingTodo;
     }
 
     @Override
     public boolean deleteTodo(int id) {
-        return false;
+        todosRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Todos with id "+ id+ " Not Found"));
+        todosRepository.deleteById(id);
+        return true;
     }
 }
